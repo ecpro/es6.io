@@ -6,16 +6,97 @@
 </head>
 <body>
 <script>
+
+  /* 
+    
+    Difference between var, let and const : 
+
+    var keyword : 
+    1. var has function scope. A variable name declared using var keywords can be 
+    re-declared to another value.
+    eg var key = "banana";
+      var key = "apple";
+
+    2. it can be re-assigned. 
+    var point = 50;
+    point = 'Piyush';
+
+    3. if variable declared with var is not any function scope then its default scope is global ie. on window object.
+
+    let keyword : 
+    1. block scoped, cannot be re-daclared with same name in same scope but re-assignable.
+    2. if not in block scope, it does not attach to window object like 'var'
+
+    const keyword : 
+    1. block scoped, cannot be re-declared or re-assigned to a new value.
+    2. const does not make object immutable. In below example 'person' object has been declared using const but we can add/modify properties on it but cannot assign it to new object.
+    3. it also does not attach itself to window object if not within a function.
+
+    4. To make objects immutable Ojbect.freeze(obj) is used as shown below.
+
+    Note :  let, const eleminated variable leak from for loop. Example below.
+
+  */
+
   const key = 'abc123';
   let points = 50;
   let winner = false;
-
+  var loser = "qwerty";
   const person = {
     name: 'Wes',
     age: 28
   }
 
   const wes = Object.freeze(person);
+
+  /* variable leak example */
+
+  for(var i = 0; i < 10; i++) {
+    // some code here
+  }
+  // since i is not inside a function so global scoped and even if the for loop has finished it is still there
+
+  console.info('i variable leaked ', i);
+
+// it won't happen if we use let instead
+
+for(let x = 0; x < 10; x++) {
+  // some code here
+}
+// x wont be available here. Uncomment below and check
+  //console.error('x is not defined here', x);
+
+// you can make a let or const variable block scoped simply by putting them inside {}
+
+{
+  const person = {
+    name : 't-rex',
+    age: 23
+  }
+  console.log('child scope has more preference in case of nested scoping');
+  console.log('inner person', person);
+}
+console.log('outer person', person);
+
+// another issue that let solves is async closure and IIFE
+console.info('\nasync closure and IIFE');
+for(var i = 0; i < 10; i++) {
+  var x = (function() {
+    var j = i;
+    return function() {
+      console.info('j', j);
+    }  
+  })();
+  setTimeout(x, 1000);
+}
+
+// above problem of async can be easily done by below
+//console.log('\nasync using let');
+for(var i = 0; i < 10; i++) {
+  setTimeout(function(){
+    console.log('let j', i);
+  },1000);
+}
 
 </script>
 </body>
