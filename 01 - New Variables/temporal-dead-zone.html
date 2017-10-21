@@ -6,8 +6,36 @@
 </head>
 <body>
 <script>
-  console.log(pizza);
+
+	/*
+
+		Accessing a var before it is declared has the result undefined
+
+		Accessing a let or const before it is declared throws ReferenceError	
+
+		Referencing let or const variable in the block before the initialization results in a ReferenceError (contrary to a variable declared with var, which will just have the undefined value). The variable is in a "temporal dead zone" from the start of the block until the initialization is processed
+
+	*/
+
+  console.log('pasta value', pasta);
+  var pasta = 'with red sauce'; // will not throw error but print 'undefined'
+
+  /* temporal dead zone example with const */
+
+  console.log(pizza); // pizza is not defined here so it will throw an error
   const pizza = 'Deep Dish 🍕🍕🍕';
+
+  /*
+  Another example of temporal dead zone combined with lexical scoping
+  */
+
+  function test(){
+     var foo = 33;
+     if (true) {
+        let foo = (foo + 55); // ReferenceError
+     }
+  }
+  test();
 
 </script>
 </body>
