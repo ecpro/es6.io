@@ -61,8 +61,14 @@
   </div>
 
   <script>
+
+    /* ------ A GOOD USE CASE OF ARROW FUNCTION AND REGULAR FUNCTION USED TOGETHER ------ */
+
     const box = document.querySelector('.box');
-    box.addEventListener('click', function() {
+    box.addEventListener('click', function() { 
+
+      // arrow function cannot be used as we need to bind 'this' to box object
+
       let first = 'opening';
       let second = 'open';
 
@@ -71,10 +77,31 @@
       }
 
       this.classList.toggle(first);
+
+      /*
+        setTimeout is a normal function call and is not attached to any object. So a 'this' inside it will point to global object and not the box object.
+
+        However instead of regular function if we use arrow function, the behaviour of 'this' will change. Inside arrow function it will point to parent scope which in this case is box's scope which is exactly what we need here.
+
+      */
       setTimeout(() => {
         console.log(this);
         this.classList.toggle(second);
       }, 500);
+
+      /*
+        In ES5 the same thing is done as shown below.
+
+        var self = this;
+
+        setTimeout(function() {
+          console.log(self);
+          self.classList.toggle(second);
+        }, 500);
+
+
+      */
+
     });
   </script>
 
