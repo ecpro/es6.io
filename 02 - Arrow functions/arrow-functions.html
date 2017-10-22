@@ -8,10 +8,12 @@
 <script>
   const names = ['wes', 'kait', 'lux'];
 
+  /* old school way */
   const fullNames = names.map(function(name) {
     return `${name} bos`;
   });
 
+  /* new way for callback in ES6 using arrow function */
   const fullNames2 = names.map((name) => {
     return `${name} bos`;
   });
@@ -20,10 +22,13 @@
     return `${name} bos`;
   });
 
+  /* implicit return examples with arrow functions */
   const fullNames4 = names.map(name => `${name} bos`);
 
+  /* if the arrow function has no arguments */
   const fullNames5 = names.map(() => `cool bos`);
 
+ /* this can also be done btw not recommmended. Kahin bhi arrow function nai pelna hai. */
   const sayMyName = (name) => {
     alert(`Hello ${name}!`)
   }
