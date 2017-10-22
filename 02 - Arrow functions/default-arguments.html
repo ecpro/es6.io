@@ -6,6 +6,20 @@
 </head>
 <body>
 <script>
+
+/*
+	old school (ES5) way of seting default argurment value if not passed in function calling.
+
+	function calculateBill(total, tax, tip) {
+		tax = tax || 0.13;
+		tip = tip || 0.15;
+		return total + (total * tax) + (total * tip);
+	}
+	
+	Below is the ES6 way of doing the same.
+
+*/
+
   function calculateBill(total, tax = 0.13, tip = 0.15) {
     return total + (total * tax) + (total * tip);
   }
