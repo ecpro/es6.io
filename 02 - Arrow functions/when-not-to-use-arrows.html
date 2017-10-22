@@ -12,14 +12,32 @@
 <button id="pushy">Push Me</button>
 
 <script>
-  // When you really need `this`
+
   const button = document.querySelector('#pushy');
+
+  /*
+    'this' behaves differently when used with arrow function. Here it is not bound to calling object but inherit from parent scope.  
+  */
+
+  // here this binds to parent scope ie. window and not to button because of arrow function
+  button.addEventListener('onmouseover', () => {
+    console.log(this); // here it will print window object
+  })
+
+  /*
+
+    ------------- SITUATIONS WHERE ARROW FUNCTION MUST NOT BE USED ----------------  
+
+  */
+
+  // When you really need `this`
   button.addEventListener('click', function() {
     console.log(this);
     this.classList.toggle('on');
   });
 
-  // When you need a method to bind to an object
+
+  // When you need a method to bind to an object 
   const person = {
     points: 23,
     score() {
@@ -45,7 +63,7 @@
 
   // When you need arguments object
   const orderChildren = function() {
-    const children = Array.from(arguments);
+    const children = Array.from(arguments); // arguments is a keyword in js which stores arraylike object but not exactly array like nodeList. Its used when a function with arguments in function definition is passed some arguments.
     return children.map((child, i) => {
       return `${child} was child #${i + 1}`;
     })
