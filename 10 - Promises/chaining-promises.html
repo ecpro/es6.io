@@ -18,47 +18,49 @@
     { name: 'Addy Osmani', twitter: '@addyosmani', bio: 'Googler' },
   ];
 
+  /* 
+  simulating database calls to demonstrate chaining of promises
+  */
+
   function getPostById(id) {
-    // create a new promise
     return new Promise((resolve, reject) => {
-      // using a settimeout to mimick a databse
-      setTimeout(() => {
-        // find the post we want
-        const post = posts.find(post => post.id === id);
-        if(post) {
-          resolve(post); // send the post back
-        } else {
-          reject(Error('No Post Was Found!'));
-        }
-      }, 200);
+      // setTimeOut to simulate time taken to fetch from db.
+      setTimeout(function() {
+      const post = posts.find(post => post.id === id);
+      if(post) {
+        resolve(post);
+      } else {
+        reject(new new Error(`Post with id ${id} not found`));
+      }
+      }, 1000);
     });
   }
 
+  /* the post obtained by above method via promises will now be fed to below function which also returns a promise */
   function hydrateAuthor(post) {
-    // create a new promise
     return new Promise((resolve, reject) => {
-      // find the author
-      const authorDetails = authors.find(person => person.name === post.author);
+      setTimeout(() => {
+      let authorDetails = authors.find(author => author.name === post.author);
       if(authorDetails) {
-        // "hydrate" the post object with the author object
         post.author = authorDetails;
         resolve(post);
       } else {
-        reject(Error('Can not find the author'));
+        reject(new Error('Author not found !'));
       }
+    },1000);
     });
   }
 
+
+  // now we can chain promises here.
   getPostById(3)
     .then(post => {
       return hydrateAuthor(post);
     })
-    .then(post => {
-      console.log(post);
-    })
+    .then(author => console.log(author))
     .catch(err => {
-      console.error(err);
-    });
+      console.log(err);
+    })
 
 
 
