@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="U TF-8">
+  <title>Inheritance Review</title>
+</head>
+
+<body>
+  <script>
+
+    /* --------- old school way of class and inheritance --------- */
+
+    // constructor function
+    function Dog(name, breed) {
+      this.name = name;
+      this.breed = breed;
+    }
+    Dog.prototype.bark = function () {
+      console.log(`Bark Bark! My name is ${this.name}`);
+    };
+
+    Dog.prototype.cuddle = function () {
+      console.log(`I love you owner!`);
+    };
+
+    // inherits Dog
+    function Beagle(aggression, obediance, name, breed) {
+      this.aggression = aggression;
+      this.obediance = obediance;
+      // this is how Beagle inherits Dog's properties
+      Dog.call(this, name, breed);
+    }
+
+    /* Making function call on Beagle delegate to Dog in case of
+      of failed lookup on Beagle
+     */
+    Beagle.prototype = Object.create(Dog.prototype);
+
+    // method accessible only to Beagle and child classes
+    Beagle.prototype.makeCall = function makeCall() {
+      console.info(`Beagle just called`);
+    }
+
+
+    /* -------------- ES6 way of classes ---------------- */
+    class Doggie {
+
+      // constructor syntax
+      constructor(name, breed) {
+        this.breed = breed;
+        this.name = name;
+      }
+
+      // getter
+      get description() {
+        return `Hi I am a dog named ${this.name} of breed ${this.breed}`;
+      }
+
+      // setter
+      set setName(name) {
+        this.name = name;
+      }
+
+      // static method. Just like Java it belong to class and not the object.
+      static info() {
+        console.info('I am a dog class');
+      }
+
+      /* method : In old school way this is
+      written as Doggie.protytpye.sayHello = function()
+      */
+      sayHello() {
+        console.info('Hello');
+      }
+
+    }
+    const lab = new Doggie('Pluto', 'labrabor');
+
+    /* settter and getter are not functions in ES6
+      they are like properties
+    */
+    console.info(lab.description);
+    console.info(lab.setName = 'labu');
+    console.info(lab.description);
+
+
+    /* ------------- inheritance example in ES6 ----------------- */
+    class Beagly extends Doggie {
+      constructor(name, breed, aggression, obediance) {
+        super(name, breed);
+        this.aggression = aggression;
+        this.obediance = obediance;
+      }
+
+      static info() {
+        console.info('I am Beagly');
+      }
+
+      sayHello2() {
+        console.info('beagle 2');
+      }
+
+    }
+
+  </script>
+</body>
+
+</html>
