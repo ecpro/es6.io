@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Brunch with Sets</title>
 </head>
+
 <body>
-<script>
-  let dog1 = { name: 'Snickers', age: 3 };
-  let dog2 = { name: 'sunny', age: 1 };
+  <script>
 
-  const weakSauce = new WeakSet([dog1, dog2]);
+    /* 1. weakset can only contains objects. It cannot contain numbers, strings, functions or anything else
+      2. There is no iterator on weakset. So for loop won't work here.
+      3. no clear() method unlike normat sets. Automatic garbage collection when no reference is
+      there to point to it.
+     */
+    let dog1 = { name: 'Snickers', age: 3 };
+    let dog2 = { name: 'sunny', age: 1 };
 
-  console.log(weakSauce);
-  dog1 = null;
-  console.log(weakSauce);
+    function test() {
+      console.info('weakset');
+    }
+    const weakSauce = new WeakSet([dog1, dog2, test]);
 
-</script>
+    // point 3 demo here. when reference is null. it automatically runs garbage collection
+    // and removes that item.
+    console.log(weakSauce);
+    dog1 = null;
+    console.log(weakSauce);
+
+  </script>
 </body>
+
 </html>

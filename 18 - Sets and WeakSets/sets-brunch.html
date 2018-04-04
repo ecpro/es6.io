@@ -12,7 +12,7 @@
   brunch.add('Sarah');
   brunch.add('Simone');
   // ready to open!
-  const line = brunch.values();
+  const line = brunch.values(); //returns an iterator just like generator function
   console.log(line.next().value);
   console.log(line.next().value);
   brunch.add('Heather');

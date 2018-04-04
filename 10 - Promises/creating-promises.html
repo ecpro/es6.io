@@ -9,6 +9,12 @@
 
     /*
     The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
+
+    Promise is created using construction functions in which a functions called executor function is passed as argument to constructor with two args resolve and reject which also are functions.
+
+    The executor normally initiates some asynchronous work, and then, once that completes, either calls the resolve function to resolve the promise or else rejects it if an error occurred.
+    If an error is thrown in the executor function, the promise is rejected. The return value of the executor is ignored.
+
     */
 
     let state = true;
